@@ -24,18 +24,28 @@ mongoose.connect(mongoURI, mongooseOptions)
 const studentSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
-    
+    required: true,//Name is a required field
   },
   age: {
     type: Number,
-     
+  },
+  email: {
+    type: String,
+    required: true, // Email is now a required field
+    match: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/, // validating the email using regex(regular expression)
+  },
+  password: {
+    type: String,
+    required: true, // Password is now a required field
+    match: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
+
   },
   present: {
     type: Boolean,
     default: true,
   }
 });
+
 
 // Middleware to parse JSON and form data
 app.use(express.json());
@@ -99,3 +109,7 @@ app.delete('/students/:id', function (req, res, next) {
 app.listen(port || 4000, function(){
   console.log("Ready to Go");
 })
+
+app.get('/', (req, res) =>{
+  res.send("welcome to studentApI ")
+});
