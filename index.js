@@ -1,11 +1,18 @@
 const express = require('express');
 const mongoose = require('mongoose');
+require('dotenv').config();
+
+//Acessing enviroment variables
+const mongoURI = process.env.DATABASE_URI;
+const secretKey = process.env.SECRET_KEY;
+
+//using the secretKey
+const mySecret= secretKey
 
 const app = express();
 const port = process.env.PORT || 4000; // Changed the default port
 
 // Define the MongoDB connection URI with the database name
-const mongoURI = 'mongodb://0.0.0.0:27017/RESTAPIdb'; // Replace 'mydatabase' with your actual database name
 const mongooseOptions = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -108,7 +115,7 @@ app.delete('/students/:id', function (req, res, next) {
 //listening port for the APIs
 app.listen(port || 4000, function(){
   console.log("Ready to Go");
-})
+});
 
 app.get('/', (req, res) =>{
   res.send("welcome to studentApI ")
